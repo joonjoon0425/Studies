@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+\input{../../preamble}
+
+\title{Group}
+\author{Hyoung Joon, Kim}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\pagestyle{fancy}
+\newpage
+
+\section{Group}
+\subsection{Introduction and Basic Definitions}
+A group is a fundamental algebraic structure consisting of a set equipped with a binary operation that satisfies certain axioms. Groups are widely used in various fields of mathematics, including algebra, geometry, and number theory, as well as in physics and computer science.
+
+
+Now, we provide the formal definition of a group.
+% Definition of Group
+\begin{defn}{Group}{GP}
+A \emph{group} is a set \( G \) equipped with a binary operation
+\(\cdot : G \times G \to G\) satisfying the following axioms:
+\begin{enumerate}[label=(\roman*)]
+    \item (\emph{Closure}) For all \( a, b \in G \), the result of the operation \( a \cdot b \) is also in \( G \).
+    \item (\emph{Associativity}) For all \( a, b, c \in G \), \( (a \cdot b) \cdot c = a \cdot (b \cdot c) \).
+    \item (\emph{Identity Element}) There exists an element \( e \in G \) such that for every element \( a \in G \), \( e \cdot a = a \cdot e = a \).
+    \item (\emph{Inverse Element}) For each \( a \in G \), there exists an element \( b \in G \) such that \( a \cdot b = b \cdot a = e \), where \( e \) is the identity element.
+\end{enumerate}
+Furthermore, if the binary operation is commutative, i.e., \(a \cdot b = b \cdot a\) for all \(a, b \in G\), then the group is called an \emph{abelian group}.
+\end{defn}
+
+Here, we can weaken the conditions (iii) and (iv) of the \hyperref[defn:GP]{Definition~\ref{defn:GP}} as follows:
+% Remark on Weakened Group Definition
+\begin{rem}{}{GPWeaken}
+Change condition (iii) and (iv) of \hyperref[defn:GP]{Definition~\ref{defn:GP}} to the following:
+\begin{enumerate}[label=(\roman*)]
+    \item[(iii)$'$] (\emph{Left Identity Element}) There exists an element \( e \in G \) such that for every element \( a \in G \), \( e \cdot a = a \).
+    \item[(iv)$'$] (\emph{Left Inverse Element}) For each \( a \in G \), there exists an element \( b \in G \) such that \( b \cdot a = e \), where \( e \) is the identity element.
+\end{enumerate}
+Then, the set \( G \) with the binary operation \(\cdot\) still forms a group.
+\end{rem}
+
+\begin{proof}
+It is left as an exercise.
+\end{proof}
+
+\begin{defn}{Subgroup}{SubGP}
+    Let $(G,\ \cdot)$ be a group. A subset $H \in G$ is called a \emph{subgroup} of $G$ if $H$ satisfies the following conditions:
+    \begin{enumerate}[label=(\roman*)]
+        \item (\emph{Closure}) For all \( a, b \in H \), \( a \cdot b \in H \).
+        \item (\emph{Identity Element}) The identity element \( e \in G \) is in \( H \).
+        \item (\emph{Inverse Element}) For each \( a \in H \), \(a^{-1} \in H\).
+    \end{enumerate} 
+\end{defn}
+
+\end{document}

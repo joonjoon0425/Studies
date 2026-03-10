@@ -1,0 +1,94 @@
+\documentclass{article}
+\input{../../../preamble}
+
+\title{Preliminaries of Machine Learning}
+\author{Hyoung Joon, Kim}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This is some notes about preliminaries of machine learning.
+
+\section{Probability}
+\subsection{Basic Definitions}
+
+% definition of probability space
+\begin{defn}{Probability Space}{PSpace}
+    A \emph{probability space} is a triple \(( \Omega, \mathcal{F}, \mathbb{P})\) where
+    \begin{itemize}
+        \item \(\Omega\) is a non-empty set called the \emph{sample space},
+        \item \(\mathcal{F}\) is a \(\sigma\)-algebra of subsets of the sample space \(\Omega\), and
+        \item \(\mathbb{P} :\mathcal{F} \to [0, 1]\) is a probability measure.
+    \end{itemize}
+\end{defn}
+
+\subsection{Lists of Probability Distributions}
+
+\subsubsection{Discrete Distributions}
+
+\begin{center}
+%\begin{tabular}
+\begin{tabularx}{\textwidth}{c X c c c}
+    \toprule
+    \textbf{Name} & \textbf{Support} & \textbf{Parameters} & \textbf{PMF} & \textbf{Mean, Variance} \\
+    \midrule
+    Bernoulli & \(\{0, 1\}\) & \(p \in \{0, 1\}\) & Ber(\(x|p\)) = \(p^x (1-p)^{1-x}\) & \(\mathbb{E}[X] = p, \mathbb{V}[X] = p(1-p)\) \\
+    \midrule
+    Binomial & \(\{0, 1, 2, \ldots, N\}\) & \(N, p \in [0,1]\) & Bin(\(x|N,p\)) = \(\binom{N}{x} p^x (1-p)^{N-x}\) & \(\mathbb{E}[X] = Np, \mathbb{V}[X] = Np(1-p)\) \\
+    \midrule
+    Categorical & \(\{0, 1, 2, \ldots, N\}\) & \(\boldsymbol{\theta}\) & Cat(\(x|\boldsymbol{\theta}\)) = \(\prod_{k=1}^{K}\theta_{k}^{\mathbb{I}(x=k)}\) \\
+    \midrule
+    Multinomial & \(\bm{x}\) where \(\sum_{k = 1}^{K} x_k = N\) & \(N, \boldsymbol{\theta}\) & Mult(\(\bm{x}|\boldsymbol{\theta}\)) = \(\binom{N}{x_1, x_2, \ldots, x_K}\prod_{k = 1}^{K}\theta_{k}^{x_k}\) \\
+    \midrule
+    Poisson & \(\{0, 1, 2, \ldots\}\) & \(\lambda > 0\) & Pois(\(x|\lambda\)) = \(e^{-\lambda}\dfrac{\lambda^x}{x!}\) & \(\mathbb{E}[X] = \lambda, \mathbb{V}[X] = \lambda\) \\
+    \bottomrule
+\end{tabularx}
+%\end{tabular}
+\end{center}
+
+
+\subsubsection{Continuous Distributions}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{c c c c X}
+    \toprule
+    \textbf{Name} & \textbf{Support} & \textbf{Parameters} & \textbf{PDF} & \textbf{Mean, Variance} \\
+    \midrule
+    Gaussian &
+    \(\mathbb R\) &
+    \(\mu, \sigma\) &
+    \(\mathcal N(\mu, \sigma^2)=\dfrac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2\sigma^2}(x-\mu)^2}\) &
+    \(\mathbb{E}[X] = \mu, \mathbb{V}[X] = \sigma^2\)
+    \\
+    \midrule
+    Student t-distribution &
+    \(\mathbb R\) &
+    \(\mu, \sigma\) &
+    \(\mathcal T_\nu(x|\mu, \sigma^2)=\dfrac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\pi\nu}\Gamma(\frac{\nu}{2})}\left(1+\dfrac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}\) &
+    \(\mathbb E[X] = 0\) for \(\nu>0\), \(\mathbb V[X] = \frac{\nu}{\nu - 2}\) for \(\nu > 2 \)
+    \\
+    \midrule
+    Cauchy &
+    \(\mathbb R\) &
+    \(\mu,\lambda\) &
+    \(\mathcal C(x|\mu,\lambda)=\dfrac{1}{\lambda\pi(\frac{x-\mu}{\lambda})^2}\) &
+    undefined
+    \\
+    \midrule
+    Laplace &
+    \(\mathbb R\) &
+    \(\mu, b\) &
+    \(\text{Laplace}(x|\mu, b) = \dfrac{1}{2b}\exp\left(-\dfrac{|x-\mu|}{b}\right)\) &
+    \(\mathbb E[X] = \mu, \mathbb V[X] = 2b^2\)
+    \\
+    \bottomrule
+\end{tabularx}
+\end{center}
+
+\end{document}
