@@ -5,6 +5,9 @@
 \author{Hyoung Joon, Kim}
 \date{\today}
 
+\newcommand{\param}{\boldsymbol{\theta}}
+\newcommand{\data}{\mathcal D}
+
 \begin{document}
 
 \maketitle
@@ -22,8 +25,8 @@ This is some notes about preliminaries of machine learning.
 \begin{defn}{Probability Space}{PSpace}
     A \emph{probability space} is a triple \(( \Omega, \mathcal{F}, \mathbb{P})\) where
     \begin{itemize}
-        \item \(\Omega\) is a non-empty set called the \emph{sample space},
-        \item \(\mathcal{F}\) is a \(\sigma\)-algebra of subsets of the sample space \(\Omega\), and
+        \item \(\Omega\) is a non-empty set called the \emph{sample space};
+        \item \(\mathcal{F}\) is a \(\sigma\)-algebra of subsets of the sample space \(\Omega\);
         \item \(\mathbb{P} :\mathcal{F} \to [0, 1]\) is a probability measure.
     \end{itemize}
 \end{defn}
@@ -111,5 +114,69 @@ This is some notes about preliminaries of machine learning.
     \bottomrule
 \end{tabularx}
 \end{center}
+
+\newpage
+\section{Statistics}
+This part is about guessing the parameters of our probability models shown in the previous section.
+Most of the estimation will take the form of
+$\hat{\boldsymbol{\theta}} =
+\underset{\boldsymbol{\theta}}{\text{argmin}}\ \mathcal L(\boldsymbol{\theta})$
+, where the $\boldsymbol{\theta}$ is our parameter to be estimated, and the $\mathcal L$ is the \emph{loss function}.
+
+
+There will be two main approaches, namely \textbf{frequentist statistics} and \textbf{Bayesian statistics}.
+Frequentist method treats parameters $\boldsymbol{\theta}$ as fixed value, and the data  $\mathcal D$ as unknown and changes.
+Conversely, Bayesian method treats parameters $\boldsymbol{\theta}$ as unknown, and the data  $\mathcal D$ as fixed and known.
+
+
+However, note that the model may not take any parameters; such models can be adjusted by using \textbf{nonparametric methods}.
+
+\subsection{Bayesian Statistics}
+Bayesian statistics treats parameters $\boldsymbol{\theta}$ as unknown, and the data $\mathcal D$ as fixed and known.
+We use Bayes rule to update our uncertainty about parameters when the data is given;
+\[
+p(\boldsymbol{\theta}|\mathcal D) =
+\dfrac
+{p(\boldsymbol{\theta}) p(\mathcal D|\boldsymbol{\theta})}
+{p(\mathcal D)} =
+\dfrac
+{p(\boldsymbol{\theta}) p(\mathcal D|\boldsymbol{\theta})}
+{\int p(\boldsymbol{\theta}') p(\mathcal D|\boldsymbol{\theta}') d\boldsymbol{\theta}'}
+\]
+Here, $p(\param)$ is called the \textbf{prior}, and $p(\data|\param)$ is called the \textbf{likelihood}.
+$p(\param|\data)$ is called the \textbf{posterior}, and $p(\data)$ is called the \textbf{marginal likelihood}.
+
+
+After the calculation of posterior distribution, we can try to predict the future observations by calculating the \textbf{posterior predictive distribution}.
+\[
+p(x|\data) = \int p(x|\param)p(\param|\data)d\param
+\]
+We are marginalizing out all the unknown parameters.
+If the calculation is too expensive, we can just plug-in the paramter value.
+\[
+p(x|\data) \approx p(x|\hat{\param})
+\]
+This is called \textbf{plug-in approximation}.
+
+\subsubsection{Conjugate Priors}
+Calculating the posterior distribution can be untractable, if the prior and likelihood does not match well.
+Here the well-matching prior according to the likelihood is given, called the \textbf{conjugate priors}.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{XXXXX}
+    \toprule
+    \textbf{likelihood} &
+    \textbf{unknown parameters} &
+    \textbf{conjugate prior} &
+    \textbf{parameters(prior)} &
+    \textbf{posterior}
+    \\
+    \midrule
+    
+    \bottomrule
+\end{tabularx}
+\end{center}
+
+
 
 \end{document}
