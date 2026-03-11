@@ -56,7 +56,7 @@ This is some notes about preliminaries of machine learning.
 \subsubsection{Continuous Distributions}
 
 \begin{center}
-\begin{tabularx}{\textwidth}{c c c c X}
+\begin{tabularx}{\textwidth}{c c c X X}
     \toprule
     \textbf{Name} & \textbf{Support} & \textbf{Parameters} & \textbf{PDF} & \textbf{Mean, Variance} \\
     \midrule
@@ -86,6 +86,27 @@ This is some notes about preliminaries of machine learning.
     \(\mu, b\) &
     \(\text{Laplace}(x|\mu, b) = \dfrac{1}{2b}\exp\left(-\dfrac{|x-\mu|}{b}\right)\) &
     \(\mathbb E[X] = \mu, \mathbb V[X] = 2b^2\)
+    \\
+    \midrule
+    Gamma &
+    \(\mathbb R^+\) &
+    \(a, b > 0\) &
+    Ga(shape = $a$, scale = $b$) = \(\dfrac{b^a}{\Gamma(a)}x^{a-1}e^{-xb}\) &
+    \(\mathbb{E}[X] = ab, \mathbb{V}[X] = ab^2\)
+    \\
+    \midrule
+    Exponential &
+    $\mathbb R^+$ &
+    $\lambda$ &
+    $\text{Expon}(x|\lambda) = \lambda e^{-\lambda x}$ &
+    $\mathbb{E}[X] = \lambda, \mathbb{V}[X] = \lambda^2$
+    \\
+    \midrule
+    Chi-squared &
+    $\mathbb R^+$ &
+    none &
+    $\chi_{\nu}^{2}(x) = \newline \text{Ga}(x|\text{shape} = \nu/2, \text{scale} = 2)$ &
+    $\mathbb{E}[X] = \nu, \mathbb{V}[X] = 2\nu $
     \\
     \bottomrule
 \end{tabularx}
