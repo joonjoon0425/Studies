@@ -94,7 +94,7 @@ This is some notes about preliminaries of machine learning.
     Gamma &
     \(\mathbb R^+\) &
     \(a, b > 0\) &
-    Ga(shape = $a$, scale = $b$) = \(\dfrac{b^a}{\Gamma(a)}x^{a-1}e^{-xb}\) &
+    Ga($x|\text{shape} = a, \text{scale} = b$) = \(\dfrac{b^a}{\Gamma(a)}x^{a-1}e^{-xb}\) &
     \(\mathbb{E}[X] = ab, \mathbb{V}[X] = ab^2\)
     \\
     \midrule
@@ -147,12 +147,12 @@ Here, $p(\param)$ is called the \textbf{prior}, and $p(\data|\param)$ is called 
 $p(\param|\data)$ is called the \textbf{posterior}, and $p(\data)$ is called the \textbf{marginal likelihood}.
 
 
-After the calculation of posterior distribution, we can try to predict the future observations by calculating the \textbf{posterior predictive distribution}.
+After the calculation of posterior distribution, we can try to predict the future observations by calculating the \textbf{posterior predictive distribution}:
 \[
 p(x|\data) = \int p(x|\param)p(\param|\data)d\param
 \]
 We are marginalizing out all the unknown parameters.
-If the calculation is too expensive, we can just plug-in the paramter value.
+If the calculation is too expensive, we can just plug-in the paramter value we estimated, like MLE or MAP.
 \[
 p(x|\data) \approx p(x|\hat{\param})
 \]
@@ -177,6 +177,9 @@ Here the well-matching prior according to the likelihood is given, called the \t
 \end{tabularx}
 \end{center}
 
-
+\section{Decision Theory}
+\section{Graphical Models}
+\section{Information Theory}
+\section{Optimization}
 
 \end{document}
