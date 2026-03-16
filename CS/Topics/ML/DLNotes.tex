@@ -1,0 +1,98 @@
+\documentclass{article}
+\input{../../../preamble}
+
+\title{Notes on Models of Machine Learning}
+\author{Hyoung Joon, Kim}
+\date{\today}
+
+\newcommand{\param}{\boldsymbol{\theta}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\data}{\mathcal D}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This is a set of notes about deep learning, based on the book by Bishop and Murphy.
+Notes will take the form of:
+\begin{enumerate}
+    \item explanation of model;
+    \item estimation of parameters (nonparametric method for nonparametric models);
+    \item computational or algorithmic issues;
+    \item other informations.
+\end{enumerate}
+\section{Linear Regression Models}
+    In this chapter, we discuss linear regression, which is a widely used method for predicting a real-valued output.
+    The most noticable property of linear regression model is that the expected value of the model is linear in parameters,
+    i.e., $\mathbb{E}[y|\bs{x}]=\bs{w}^{\top}\bs{x}$.
+
+    This model is:
+    \begin{itemize}
+        \item parametric method
+        \item supervised learning
+    \end{itemize}
+
+    \subsection{Least Squares Linear Regression}
+        \subsubsection{Model Explanation}
+            \begin{defn}{Least Squares Linear Regression Model}{LSLR}
+                The following is the most common form of the linear regression model:
+                \[
+                p(y|\bs{x}, \param) = \mathcal{N}(y|w_0+\bs{w}^\top \bs{x}, \sigma^2)
+                \]
+                where $w_0$ is called \textbf{bias} and $\bs{w}$ is called \textbf{weights}. If the output is an N-dimensional vector, then the model has following form:
+                \[ 
+                p(\bs{y}|\bs{x}, \param) = \prod_{k=1}^{N}\mathcal{N}(y_k|\bs{w}_k^\top, \sigma_{k}^{2})
+                \]
+                (the model is assuming that each elements of the output vector is independent.)
+            \end{defn}
+
+        \subsubsection{Parameter Estimation}
+            The estimation of parameters of \hyperref[defn:LSLR]{this model} will be done through calculating the MLE.
+
+            \begin{thm}{MLE of Least Squares Linear Regression}{MLEofLSLR}
+                Let $\data=\{(x_k, y_k)|\ k=1,2,\ldots,N\}$ be the given data, and $\hat{y_k}=\bs{w}^\top x_k$ the predicted data (using the plug-in predictive distribution).
+                \begin{itemize}
+                    \item objective function : NLL (negative log likelihood) = $-\sum_{k=1}^{N}\log{p(x_k|y_k,\param)}$;
+                    \item objective : maximize NLL about $\param$;
+                    \item solution : $\hat{\bs{w}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}\textbf{y}$,
+                    where $\textbf{X}=(\bs{x}_1, \bs{x}_2, \ldots, \bs{x}_N)^\top$ and $\textbf{y}=(y_1,y_2,\ldots,y_N)$;
+                \end{itemize}
+                The quantity $\hat{\bs{w}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}$
+                is called pseudo inverse of matrix $\textbf{X}$, and often denoted $\textbf{X}^{\dagger}$.
+                The matrix $\textbf{X}$ is called \textbf{design matrix}.
+            \end{thm}
+            Here, we can notice that the NLL is equal (up to unrelevant constants) to the RSS (residual sum of squares), given by
+            \[
+            \text{RSS}(\bs{w}) = \frac{1}{2} \sum_{k=1}^{N}(y_n - \bs{w}^{\top}\bs{x}_k)^2.
+            \]
+
+            This, least squares linear regression model has many variations, such as ridge regression, lasso regression, and robust regression, etc.
+            These will be discussed soon.
+
+        \subsubsection{Computational Issues}
+            Estimating parameters of the \hyperref[defn:LSLR]{model} can be done by calculating the pseudo-inverse of $\textbf{X}$. Methods are given here.
+
+            (W.I.P)
+
+    \subsection{Ridge Regression}
+    \subsection{Lasso Regression}
+    \subsection{Robust Linear Regression}
+    \subsection{Bayesian Linear Regression}
+
+    (W.I.P)
+
+\section{Logistic Regression Models}
+
+    \subsection{Binary Logistic Regression}
+    \subsection{Multinomial Logistic Regression}
+    \subsection{Robust Logistic Regression}
+    \subsection{Bayesian Logistic Regression}
+
+    (W.I.P)
+
+
+
+\end{document}
