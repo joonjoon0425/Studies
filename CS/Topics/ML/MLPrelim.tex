@@ -5,8 +5,6 @@
 \author{Hyoung Joon, Kim}
 \date{\today}
 
-\newcommand{\param}{\boldsymbol{\theta}}
-\newcommand{\data}{\mathcal D}
 
 \begin{document}
 
@@ -20,6 +18,7 @@ This is some notes about preliminaries of machine learning, based on the book by
 
 \section{Probability}
 \subsection{Basic Definitions}
+
 
 % definition of probability space
 \begin{defn}{Probability Space}{PSpace}
@@ -45,9 +44,9 @@ This is some notes about preliminaries of machine learning, based on the book by
     \midrule
     Binomial & \(\{0, 1, 2, \ldots, N\}\) & \(N, p \in [0,1]\) & Bin(\(x|N,p\)) = \(\binom{N}{x} p^x (1-p)^{N-x}\) & \(\mathbb{E}[X] = Np, \mathbb{V}[X] = Np(1-p)\) \\
     \midrule
-    Categorical & \(\{0, 1, 2, \ldots, N\}\) & \(\boldsymbol{\theta}\) & Cat(\(x|\boldsymbol{\theta}\)) = \(\prod_{k=1}^{K}\theta_{k}^{\mathbb{I}(x=k)}\) \\
+    Categorical & \(\{0, 1, 2, \ldots, N\}\) & \(\param\) & Cat(\(x|\param\)) = \(\prod_{k=1}^{K}\theta_{k}^{\mathbb{I}(x=k)}\) \\
     \midrule
-    Multinomial & \(\bm{x}\) where \(\sum_{k = 1}^{K} x_k = N\) & \(N, \boldsymbol{\theta}\) & Mult(\(\bm{x}|\boldsymbol{\theta}\)) = \(\binom{N}{x_1, x_2, \ldots, x_K}\prod_{k = 1}^{K}\theta_{k}^{x_k}\) \\
+    Multinomial & \(\bm{x}\) where \(\sum_{k = 1}^{K} x_k = N\) & \(N, \param\) & Mult(\(\bm{x}|\param\)) = \(\binom{N}{x_1, x_2, \ldots, x_K}\prod_{k = 1}^{K}\theta_{k}^{x_k}\) \\
     \midrule
     Poisson & \(\{0, 1, 2, \ldots\}\) & \(\lambda > 0\) & Pois(\(x|\lambda\)) = \(e^{-\lambda}\dfrac{\lambda^x}{x!}\) & \(\mathbb{E}[X] = \lambda, \mathbb{V}[X] = \lambda\) \\
     \bottomrule
@@ -119,29 +118,29 @@ This is some notes about preliminaries of machine learning, based on the book by
 \section{Statistics}
 This part is about guessing the parameters of our probability models shown in the previous section.
 Most of the estimation will take the form of
-$\hat{\boldsymbol{\theta}} =
-\underset{\boldsymbol{\theta}}{\text{argmin}}\ \mathcal L(\boldsymbol{\theta})$
-, where the $\boldsymbol{\theta}$ is our parameter to be estimated, and the $\mathcal L$ is the \emph{loss function}.
+$\hat{\param} =
+\underset{\param}{\text{argmin}}\ \mathcal L(\param)$
+, where the $\param$ is our parameter to be estimated, and the $\mathcal L$ is the \emph{loss function}.
 
 
 There will be two main approaches, namely \textbf{frequentist statistics} and \textbf{Bayesian statistics}.
-Frequentist method treats parameters $\boldsymbol{\theta}$ as fixed value, and the data  $\mathcal D$ as unknown and changes.
-Conversely, Bayesian method treats parameters $\boldsymbol{\theta}$ as unknown, and the data  $\mathcal D$ as fixed and known.
+Frequentist method treats parameters $\param$ as fixed value, and the data  $\mathcal D$ as unknown and changes.
+Conversely, Bayesian method treats parameters $\param$ as unknown, and the data  $\mathcal D$ as fixed and known.
 
 
 However, note that the model may not take any parameters; such models can be adjusted by using \textbf{nonparametric methods}.
 
 \subsection{Bayesian Statistics}
-Bayesian statistics treats parameters $\boldsymbol{\theta}$ as unknown, and the data $\mathcal D$ as fixed and known.
+Bayesian statistics treats parameters $\param$ as unknown, and the data $\mathcal D$ as fixed and known.
 We use Bayes rule to update our uncertainty about parameters when the data is given;
 \[
-p(\boldsymbol{\theta}|\mathcal D) =
+p(\param|\mathcal D) =
 \dfrac
-{p(\boldsymbol{\theta}) p(\mathcal D|\boldsymbol{\theta})}
+{p(\param) p(\mathcal D|\param)}
 {p(\mathcal D)} =
 \dfrac
-{p(\boldsymbol{\theta}) p(\mathcal D|\boldsymbol{\theta})}
-{\int p(\boldsymbol{\theta}') p(\mathcal D|\boldsymbol{\theta}') d\boldsymbol{\theta}'}
+{p(\param) p(\mathcal D|\param)}
+{\int p(\param') p(\mathcal D|\param') d\param'}
 \]
 Here, $p(\param)$ is called the \textbf{prior}, and $p(\data|\param)$ is called the \textbf{likelihood}.
 $p(\param|\data)$ is called the \textbf{posterior}, and $p(\data)$ is called the \textbf{marginal likelihood}.
@@ -181,5 +180,6 @@ Here the well-matching prior according to the likelihood is given, called the \t
 \section{Graphical Models}
 \section{Information Theory}
 \section{Optimization}
+
 
 \end{document}

@@ -5,9 +5,6 @@
 \author{Hyoung Joon, Kim}
 \date{\today}
 
-\newcommand{\param}{\boldsymbol{\theta}}
-\newcommand{\bs}{\boldsymbol}
-\newcommand{\data}{\mathcal D}
 
 \begin{document}
 
@@ -24,6 +21,25 @@ Notes will take the form of:
     \item computational or algorithmic issues;
     \item other informations.
 \end{enumerate}
+
+    \subsection{Notations}
+        \begin{itemize}
+            \item real value: $x$
+            \item vector value: $\bs{x}$
+            \item vector: $\bs{x} = (x_1, x_2, \ldots, x_n)
+            = 
+            \begin{pmatrix}
+                x_1 \\
+                x_2 \\
+                \vdots \\
+                x_n    
+            \end{pmatrix}
+            =
+            (x_1\ x_2\ \ldots\ x_n)^\top
+            $
+            \item matrix: $\textbf{X}$
+        \end{itemize}
+
 \section{Linear Regression Models}
     In this chapter, we discuss linear regression, which is a widely used method for predicting a real-valued output.
     The most noticable property of linear regression model is that the expected value of the model is linear in parameters,
@@ -33,6 +49,7 @@ Notes will take the form of:
     \begin{itemize}
         \item parametric method
         \item supervised learning
+        \item assumes that the data distribution is i.i.d and normal
     \end{itemize}
 
     \subsection{Least Squares Linear Regression}
@@ -44,21 +61,24 @@ Notes will take the form of:
                 \]
                 where $w_0$ is called \textbf{bias} and $\bs{w}$ is called \textbf{weights}. If the output is an N-dimensional vector, then the model has following form:
                 \[ 
-                p(\bs{y}|\bs{x}, \param) = \prod_{k=1}^{N}\mathcal{N}(y_k|\bs{w}_k^\top, \sigma_{k}^{2})
+                p(\bs{y}|\bs{x}, \param) = \prod_{k=1}^{N}\mathcal{N}(y_k|\bs{w}_k^\top\bs{x}, \sigma_{k}^{2})
                 \]
                 (the model is assuming that each elements of the output vector is independent.)
             \end{defn}
+
+            We will usually assume that $\bs{x}$ is written as $(1, x_1, x_2, \ldots, x_n)$ so that the bias $w_0$ can be absorbed into the weight vector $\bs{w}$.
 
         \subsubsection{Parameter Estimation}
             The estimation of parameters of \hyperref[defn:LSLR]{this model} will be done through calculating the MLE.
 
             \begin{thm}{MLE of Least Squares Linear Regression}{MLEofLSLR}
-                Let $\data=\{(x_k, y_k)|\ k=1,2,\ldots,N\}$ be the given data, and $\hat{y_k}=\bs{w}^\top x_k$ the predicted data (using the plug-in predictive distribution).
+                Let $\data=\{(\bs{x}_k, y_k)|\ k=1,2,\ldots,N\}$ be the given data, and $\hat{y_k}=\bs{w}^\top \bs{x}_k$ the predicted data (using the plug-in predictive distribution).
+                Let $\textbf{X}=(\bs{x}_1 \ \bs{x}_2 \ \ldots \ \bs{x}_N)^\top$ and $\textbf{y}=(y_1,y_2,\ldots,y_N)$
                 \begin{itemize}
-                    \item objective function : NLL (negative log likelihood) = $-\sum_{k=1}^{N}\log{p(x_k|y_k,\param)}$;
-                    \item objective : maximize NLL about $\param$;
-                    \item solution : $\hat{\bs{w}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}\textbf{y}$,
-                    where $\textbf{X}=(\bs{x}_1, \bs{x}_2, \ldots, \bs{x}_N)^\top$ and $\textbf{y}=(y_1,y_2,\ldots,y_N)$;
+                    \item objective function: NLL (negative log likelihood) = $-\sum_{k=1}^{N}\log{\mathcal N(y_k|\bs{w}^\top \bs{x}, \sigma^2)}$;
+                    \item objective: maximize NLL about $\bs{w}$ and $\sigma$;
+                    \item solution: $\hat{\bs{w}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}\textbf{y}$ 
+                    and $\hat{\sigma}^2=\dfrac{1}{N}\sum_{k=1}^{N}(y_k-\hat{\bs{w}}^{\top}\bs{x}_k)^2$
                 \end{itemize}
                 The quantity $\hat{\bs{w}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}$
                 is called pseudo inverse of matrix $\textbf{X}$, and often denoted $\textbf{X}^{\dagger}$.
@@ -69,13 +89,27 @@ Notes will take the form of:
             \text{RSS}(\bs{w}) = \frac{1}{2} \sum_{k=1}^{N}(y_n - \bs{w}^{\top}\bs{x}_k)^2.
             \]
 
-            This, least squares linear regression model has many variations, such as ridge regression, lasso regression, and robust regression, etc.
-            These will be discussed soon.
+            If the output value is a vector, parameter estimation is done in a similiar way.
+
+            \begin{thm}{MLE of Least Squares Linear Regression; vector output}{MLEofLSLR2}
+                Let $\data=\{(\bs{x}_k, \bs{y}_k)|\ k = 1, 2, \ldots, N\}$, and let $n$ and $m$ be the dimension of $\bs{x}_k$ and $\bs{y}_k$.
+                Let $\textbf{W} = (\bs{w}_1, \bs{w}_2, \ldots, \bs{w}_n)$ be \textbf{weight matrix}.
+                \begin{itemize}
+                    \item objective function:
+                    \item objective:
+                    \item solution:
+                \end{itemize}
+            \end{thm}
 
         \subsubsection{Computational Issues}
             Estimating parameters of the \hyperref[defn:LSLR]{model} can be done by calculating the pseudo-inverse of $\textbf{X}$. Methods are given here.
 
             (W.I.P)
+        
+        \subsubsection{Other Informations}
+            
+            Least squares linear regression model has many variations, such as ridge regression, lasso regression, and robust regression, etc.
+            These will be discussed soon.
 
     \subsection{Ridge Regression}
     \subsection{Lasso Regression}
@@ -93,6 +127,8 @@ Notes will take the form of:
 
     (W.I.P)
 
+\section{General Linear Models}
 
+\section{Deep Neural Network Models}
 
 \end{document}
