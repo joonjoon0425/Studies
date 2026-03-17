@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{report}
 \input{../../../preamble}
 
 \title{Preliminaries of Machine Learning}
@@ -12,12 +12,12 @@
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\chapter{Introduction}
 
 This is some notes about preliminaries of machine learning, based on the book by Kevin Murphy.
 
-\section{Probability}
-\subsection{Basic Definitions}
+\chapter{Probability}
+\section{Basic Definitions}
 
 
 % definition of probability space
@@ -30,9 +30,9 @@ This is some notes about preliminaries of machine learning, based on the book by
     \end{itemize}
 \end{defn}
 
-\subsection{Lists of Probability Distributions}
+\section{Lists of Probability Distributions}
 
-\subsubsection{Discrete Distributions}
+\subsection{Discrete Distributions}
 
 \begin{center}
 %\begin{tabular}
@@ -55,7 +55,7 @@ This is some notes about preliminaries of machine learning, based on the book by
 \end{center}
 
 
-\subsubsection{Continuous Distributions}
+\subsection{Continuous Distributions}
 
 \begin{center}
 \begin{tabularx}{\textwidth}{c c c X X}
@@ -114,8 +114,7 @@ This is some notes about preliminaries of machine learning, based on the book by
 \end{tabularx}
 \end{center}
 
-\newpage
-\section{Statistics}
+\chapter{Statistics}
 This part is about guessing the parameters of our probability models shown in the previous section.
 Most of the estimation will take the form of
 $\hat{\param} =
@@ -130,56 +129,82 @@ Conversely, Bayesian method treats parameters $\param$ as unknown, and the data 
 
 However, note that the model may not take any parameters; such models can be adjusted by using \textbf{nonparametric methods}.
 
-\subsection{Bayesian Statistics}
-Bayesian statistics treats parameters $\param$ as unknown, and the data $\mathcal D$ as fixed and known.
-We use Bayes rule to update our uncertainty about parameters when the data is given;
-\[
-p(\param|\mathcal D) =
-\dfrac
-{p(\param) p(\mathcal D|\param)}
-{p(\mathcal D)} =
-\dfrac
-{p(\param) p(\mathcal D|\param)}
-{\int p(\param') p(\mathcal D|\param') d\param'}
-\]
-Here, $p(\param)$ is called the \textbf{prior}, and $p(\data|\param)$ is called the \textbf{likelihood}.
-$p(\param|\data)$ is called the \textbf{posterior}, and $p(\data)$ is called the \textbf{marginal likelihood}.
+    \section{Bayesian Statistics}
+    Bayesian statistics treats parameters $\param$ as unknown, and the data $\mathcal D$ as fixed and known.
+    We use Bayes rule to update our uncertainty about parameters when the data is given;
+    \[
+    p(\param|\mathcal D) =
+    \dfrac
+    {p(\param) p(\mathcal D|\param)}
+    {p(\mathcal D)} =
+    \dfrac
+    {p(\param) p(\mathcal D|\param)}
+    {\int p(\param') p(\mathcal D|\param') d\param'}
+    \]
+    Here, $p(\param)$ is called the \textbf{prior}, and $p(\data|\param)$ is called the \textbf{likelihood}.
+    $p(\param|\data)$ is called the \textbf{posterior}, and $p(\data)$ is called the \textbf{marginal likelihood}.
 
+    After the calculation of posterior distribution, we can try to predict the future observations by calculating the \textbf{posterior predictive distribution}:
+    \[
+    p(x|\data) = \int p(x|\param)p(\param|\data)d\param
+    \]
+    We are marginalizing out all the unknown parameters.
+    If the calculation is too expensive, we can just plug-in the paramter value we estimated, like MLE or MAP.
+    \[
+    p(x|\data) \approx p(x|\hat{\param})
+    \]
+    This is called \textbf{plug-in approximation}.
 
-After the calculation of posterior distribution, we can try to predict the future observations by calculating the \textbf{posterior predictive distribution}:
-\[
-p(x|\data) = \int p(x|\param)p(\param|\data)d\param
-\]
-We are marginalizing out all the unknown parameters.
-If the calculation is too expensive, we can just plug-in the paramter value we estimated, like MLE or MAP.
-\[
-p(x|\data) \approx p(x|\hat{\param})
-\]
-This is called \textbf{plug-in approximation}.
-
-\subsubsection{Conjugate Priors}
-Calculating the posterior distribution can be untractable, if the prior and likelihood does not match well.
-Here the well-matching prior according to the likelihood is given, called the \textbf{conjugate priors}.
-
-\begin{center}
-\begin{tabularx}{\textwidth}{XXXXX}
-    \toprule
-    \textbf{likelihood} &
-    \textbf{unknown parameters} &
-    \textbf{conjugate prior} &
-    \textbf{parameters(prior)} &
-    \textbf{posterior}
-    \\
-    \midrule
+        \subsection{Selecting the Prior}
+        Selecting appropriate prior for parameters are one of the challenging problem of Bayesian method.
+        There are several choices;
+        \begin{itemize}
+            \item \hyperref[sec:ConjugatePrior]{conjugate prior}
+            \item \hyperref[sec:UninformativePrior]{uninformative prior}
+            \item \hyperref[sec:HierPrior]{hierarchical prior}
+            \item \hyperref[sec:EmpPrior]{empirical prior}
+        \end{itemize}
     
-    \bottomrule
-\end{tabularx}
-\end{center}
+    \section{Frequentist Statistics}
+    Frequentist statistics assumes that there is a true parameter value $\param$ and tries to estimate the parameter value
+    by changing the data.
+    The change of data will change the quantity which is used to estimate the parameter,
+    and we use this change to check which is the best estimation.
 
-\section{Decision Theory}
-\section{Graphical Models}
-\section{Information Theory}
-\section{Optimization}
+    Even if the frequentist method has some drawbacks and even paradoxes, several concepts such as
+    cross validation is useful even in the Bayesian method. Here, the basic concepts are shown.
+
+        \subsection{Sampling Distribution}
+        \subsection{Fisher Information Matrix}
+
+    \section{Conjugate Priors}\label{sec:ConjugatePrior}
+    Calculating the posterior distribution can be untractable, if the prior and likelihood does not match well.
+    Here the well-matching prior according to the likelihood is given, called the \textbf{conjugate priors}.
+
+    \begin{center}
+    \begin{tabularx}{\textwidth}{XXXXX}
+        \toprule
+        \textbf{likelihood} &
+        \textbf{unknown parameters} &
+        \textbf{conjugate prior} &
+        \textbf{parameters(prior)} &
+        \textbf{posterior}
+        \\
+        \midrule
+            
+        \bottomrule
+    \end{tabularx}
+    \end{center}
+
+    \section{Uninformative Priors}\label{sec:UninformativePrior}
+    \section{Hierarchical Priors}\label{sec:HierPrior}
+    \section{Empirical Priors}\label{sec:EmpPrior}
+
+\chapter{Decision Theory}
+After
+\chapter{Graphical Models}
+\chapter{Information Theory}
+\chapter{Optimization}
 
 
 \end{document}

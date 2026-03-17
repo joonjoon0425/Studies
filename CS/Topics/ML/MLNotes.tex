@@ -1,0 +1,217 @@
+\documentclass{report}
+\input{../../../preamble}
+
+\title{Notes on Models of Machine Learning}
+\author{Hyoung Joon, Kim}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\chapter{Introduction}
+This is a set of notes about machine learning, based on the book by Bishop and Murphy.
+I assume that the reader is familiar with ML topics, since this is just a simple reference.
+
+    \section{Notations}
+        \begin{itemize}
+            \item real value: $x$
+            \item vector value: $\bs{x}$
+            \item vector: $\bs{x} = (x_1, x_2, \ldots, x_n)
+            = 
+            \begin{pmatrix}
+                x_1 \\
+                x_2 \\
+                \vdots \\
+                x_n    
+            \end{pmatrix}
+            =
+            (x_1\ x_2\ \ldots\ x_n)^\top
+            $
+            \item matrix: $\textbf{X}$
+        \end{itemize}
+
+\chapter{Linear Regression Models}
+    In this chapter, we discuss linear regression, which is a widely used method for predicting a real-valued output.
+    The most noticable property of linear regression model is that the expected value of the model is linear in parameters,
+    i.e., $\mathbb{E}[y|\bs{x}]=\bs{w}^{\top}\bs{x}$.
+
+    \section{Least Squares Linear Regression}
+        \subsection{Model Explanation}
+            \begin{defn}{Least Squares Linear Regression Model}{LSLR}
+                The following is the most common form of the linear regression model:
+                \[
+                p(y|\bs{x}, \param) = \mathcal{N}(y|w_0+\bs{w}^\top \bs{x}, \sigma^2)
+                \]
+                where $w_0$ is called \textbf{bias} and $\bs{w}$ is called \textbf{weights}. If the output is an N-dimensional vector, then the model has following form:
+                \[ 
+                p(\bs{y}|\bs{x}, \param) = \prod_{k=1}^{N}\mathcal{N}(y_k|\bs{w}_k^\top\bs{x}, \sigma_{k}^{2})
+                \]
+                (the model is assuming that each elements of the output vector is independent.)
+            \end{defn}
+
+            We will usually assume that $\bs{x}$ is written as $(1, x_1, x_2, \ldots, x_n)$ so that the bias $w_0$ can be absorbed into the weight vector $\bs{w}$.
+
+        \subsection{Parameter Estimation}
+            The estimation of parameters of \hyperref[defn:LSLR]{this model} is usually done through calculating the MLE.
+
+            \begin{thm}{MLE of Least Squares Linear Regression}{MLEofLSLR}
+                Let $\data=\{(\bs{x}_k, y_k)|\ k=1,2,\ldots,N\}$ be the given data, and $\hat{y_k}=\bs{w}^\top \bs{x}_k$ the predicted data (using the plug-in predictive distribution).
+                Let $\textbf{X}=(\bs{x}_1 \ \bs{x}_2 \ \ldots \ \bs{x}_N)^\top$ and $\textbf{y}=(y_1,y_2,\ldots,y_N)$
+                \begin{itemize}
+                    \item objective function: NLL (negative log likelihood) = $-\sum_{k=1}^{N}\log{\mathcal N(y_k|\bs{w}^\top \bs{x}_k, \sigma^2)}$;
+                    \item objective: maximize NLL about $\bs{w}$ and $\sigma$;
+                    \item solution: $\hat{\bs{w}}=\textbf{X}^{\dagger}\textbf{y}$ 
+                    and $\hat{\sigma}^2=\dfrac{1}{N}\sum_{k=1}^{N}(y_k-\hat{\bs{w}}^{\top}\bs{x}_k)^2$
+                \end{itemize}
+                The quantity $\textbf{X}^{\dagger}$
+                is pseudo inverse of matrix $\textbf{X}$, and if $\textbf{X}$ has full rank, it's value equals
+                $(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}$.
+                The matrix $\textbf{X}$ is called \textbf{design matrix}.
+            \end{thm}
+            Here, we can notice that the NLL is equal (up to unrelevant constants) to the RSS (residual sum of squares), given by
+            \[
+            \text{RSS}(\bs{w}) = \frac{1}{2} \sum_{k=1}^{N}(y_n - \bs{w}^{\top}\bs{x}_k)^2.
+            \]
+
+            If the output value is a vector, parameter estimation is done in a similiar way.
+
+            \begin{thm}{MLE of Least Squares Linear Regression; vector output}{MLEofLSLR2}
+                Let $\data=\{(\bs{x}_k, \bs{y}_k)|\ k = 1, 2, \ldots, N\}$, and let $n$ and $m$ be the dimension of $\bs{x}_k$ and $\bs{y}_k$.
+                Let $\textbf{W} = (\bs{w}_1, \bs{w}_2, \ldots, \bs{w}_n)$ be \textbf{weight matrix}.
+                \begin{itemize}
+                    \item objective function:
+                    \item objective:
+                    \item solution:
+                \end{itemize}
+            \end{thm}
+        
+        Calculating the pseudo-inverse of $\textbf{X}$ could be established by directly calculating the inverse of $\textbf{X}^{\top}\textbf{X}$,
+        but the given matrix may not have full rank.
+        Instead, we have other methods that works well even when the $\textbf{X}^{\top}\textbf{X}$ is ill-formed.
+        
+        (W.I.P)
+        
+        \subsection{Further Informations}
+            
+            Least squares linear regression model has many variations, such as ridge regression, lasso regression, and robust regression, etc.
+            It can represent and classify nonlinear data by using basis functions.
+            These will be discussed soon.
+
+    \section{Ridge Regression}
+
+    \section{Lasso Regression}
+
+    \section{Robust Linear Regression}
+
+    \section{Bayesian Linear Regression}
+
+    (W.I.P)
+
+\chapter{Logistic Regression Models}
+
+    \section{Binary Logistic Regression}
+    \section{Multinomial Logistic Regression}
+    \section{Robust Logistic Regression}
+    \section{Bayesian Logistic Regression}
+
+    (W.I.P)
+
+\chapter{General Linear Models}
+
+\chapter{Deep Neural Network}
+    In this chapter, we will discuss about neural networks.
+    Neural network is tool rather than the model itself.
+    It can be applied at various problems such as regression, classification, and even generation.
+    There are two main ways to combine DNNs with probabilistic models.
+    \begin{itemize}
+        \item define nonlinear functions inside conditional distributions;
+        \item approximate the posterior distribution;
+    \end{itemize}
+    This is possible due to the \textbf{universial approximation theorem}, which says that
+    neural network can approximate any given function.
+    
+
+    \section{Multilayer Neural Network}
+    
+        \subsection{Introduction}
+        Here, the simplest form of neural network is given.
+
+        \begin{defn}{Multilayer Neural Network}{NN}
+            Let $\bs{x}$ be an $n$-dimensional vector input, and let $\bs{y}$ be an $m$-dimensional output vector.
+            Let \{$\textbf{W}^{(k)}|\ k=1,2,\ldots,l$\} be weight matrices, let $h$ be an activation function,
+            and let $f$ be an output activation function, whoose output is an $m$-dimensional vector.
+            The following is the form of multilayer neural network model;
+
+            \[
+            \bs{y}(\bs{x},\textbf{W})=f(\textbf W^{(l)}(h(\textbf W^{(l-1)}\ldots h(\textbf W^{(1)}\bs{x}))))
+            \]
+
+            where $f(\cdot)$ and $h(\cdot)$ are evaluated on each vector element separately.
+        
+        \end{defn}
+        Using this neural network, for example, in a regression problem, assuming that output value follows normal distribution,
+        the model will look like this:
+        \[
+        p(t|\bs{x}, \textbf{W}) = \mathcal N (t|\bs{y}, \sigma^2)
+        \]
+
+        The neural network  can be easily recognized with following illustration: (PUT PICTURE HERE)
+
+        \subsection{Backpropagation}
+
+        \subsection{Further Informations}
+        \subsubsection{List of Activation Functions}
+            \begin{center}
+                \begin{tabularx}{\textwidth}{XX}
+                \toprule
+                \textbf{Name} & \textbf{Definition}
+                \\
+                \midrule
+                logistic sigmoid & $\sigma(a)=\dfrac{1}{1+\exp{(-a)}}$
+                \\
+                \midrule
+                tanh & $\text{tanh}(a)=\dfrac{e^a-e^{-a}}{e^a+e^{-a}}$
+                \\
+                \midrule
+                hard tanh & $h(a)=\max{(-1, \min{(1,a)})}$
+                \\
+                \midrule
+                softplus (soft ReLU) & $h(a)=\ln{(1+\exp{(a)})}$
+                \\
+                \midrule
+                ReLU & $h(a)=\max{(0,a)}$
+                \\
+                \midrule
+                leaky ReLU & $h(a)=\max{(0,a)} + \alpha \min{(0,a)}$, where $0<\alpha<1$
+                \\
+                \midrule
+                absolute & $h(a)=\vert a \vert$
+                \\
+                \bottomrule
+                \end{tabularx}
+            \end{center}
+
+            ReLU (rectified linear unit) is the most widely used activation function, since it avoids vanishing gradient problem.
+% move this subsubsection to next section.
+        \subsubsection{Learning Methods} 
+            \textbf{Representation Learning}
+
+            \textbf{Transfer Learning}
+
+            \textbf{Contrastive Learning}
+    
+        \subsubsection{Mixture Density Networks}
+        We have been assuming that the output value follows distributions is Gaussian, which is unimodal.
+        But, in real life, this may not match well.
+        We can use \textbf{mixture models} to solve this problem. It is not a hard concept.
+        What we have to do is just switch the output distribution from Gaussian to more complex, flexible distribution,
+        such as \textbf{mixture Gaussian model}, which is multimodal.
+
+    \section{Building Blocks of Neural Networks}
+
+
+\end{document}
