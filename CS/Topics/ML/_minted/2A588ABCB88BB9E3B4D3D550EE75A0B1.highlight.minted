@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} sample code block}
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{is\PYGZus{}prime}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
+    \PYG{k}{if} \PYG{n}{n} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{2}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n}{false}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{o}{**}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{):}
+        \PYG{k}{if} \PYG{n}{n} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}
+            \PYG{k}{return} \PYG{n}{false}
+
+    \PYG{k}{return} \PYG{n}{true}
+\end{MintedVerbatim}
