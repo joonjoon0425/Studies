@@ -16,6 +16,9 @@
 
 This is some notes about preliminaries of machine learning, based on the book by Kevin Murphy.
 
+    \section{Notation}
+    $\mathbb{E}_{x \sim p(x)}$ means that the expectation is taken about $x$ where $x$ has distribution $p(x)$.
+
 \chapter{Probability}
 \section{Basic Definitions}
 
@@ -175,7 +178,93 @@ However, note that the model may not take any parameters; such models can be adj
     cross validation is useful even in the Bayesian method. Here, the basic concepts are shown.
 
         \subsection{Sampling Distribution}
+            In frequentist statistics, uncertainty is represented by the \textbf{sampling distribution}
+            of a estimator. Here, estimator can be MLE, MAP estimate or method of moments estimate.
+            \begin{defn}{Sampling Distribution}{samplingDist}
+                Let $\bs{\Theta}(\data)$ be an estimator of parameter $\param$.
+                Then, the sampling distribution of $\bs{\Theta}(\data)$ is the distribution obtained by simply keep changing the data set, $\data$.
+                More precisely, let $\tilde{\data}^{(s)}$ be an s-th sample from true data distribution. Then,
+                \[
+                p(\bs{\Theta}(\tilde{\data})=\param) \approx \frac{1}{S}\sum_{s=1}^{S}\delta(\param-\bs{\Theta}(\tilde{\data}^{(s)}))
+                \]
+                where $S$ is size of the sample.
+            \end{defn}
+
+            \subsubsection{Bootstrap Approximation of Sampling Distribution}
+                Since the true distribution of data set is unknown, we can't easily get the sampling distribution of estimator.
+                Instead, we can use \textbf{bootstrap} method.
+
+                \begin{defn}{Bootstrap Approximation}{bootstapApprox}
+                    Let $\data$ be the given data set, and let $p(x|\param^*)$ be the true distribution of data set.
+                    \begin{itemize}
+                        \item parametric bootstrap: plug-in the estimator value in proability distribution and create sampling distribution.
+                            More precisely, use $\tilde{\data}^{(s)} = \{\bs{x}_n \sim p(x|\bs{\Theta}(\data)) | n = 1, 2, \ldots, N\}$
+                            instead of $\{\bs{x}_n \sim p(x|\param^*) | n = 1, 2, \ldots, N\}$.
+                        \item nonparametric bootstrap: sample datapoints from the original dataset.
+                    \end{itemize}
+                \end{defn}
+
+            \subsubsection{Bootstrap vs Bayesian}
+                An estimator obtained by bootstrap method and posterior distribution are quite different.
+                But, in certain condition, where estimator is MLE and the prior for posterior distribution is not so strong,
+                they can be quite similar. Check \hyperref[thm:ANSD]{this theorem}.
+
+                Bootstrap method can actually be slower than posterior sampling,
+                since bootstrap method requires some number of sampling, but posterior need only one sampling.
+
+            \subsubsection{Asymptotic Normality of Sampling Distribution}
+                How can one ensure that the sampling distribution is really useful?
+                i.e., can we really approximate real parameter value with sampling distribution?
+                The answer is yes, under certain conditions, when the estimator is MLE. 
+
+                \begin{thm}{Asymptotic Normality of Sampling Distribution}{ANSD}
+                Under various technical conditions, we have
+                \[
+                \sqrt{N}(\hat{\param}-\param^*) \rightarrow \mathcal N(\bs{0}, \textbf{F}(\param^*)^{-1})
+                \]
+                where $\textbf{F}(\param^*)$ is \textbf{Fisher information matrix}, and $\param^*$ is the true parameter value.
+                \end{thm}
+
+                Since the \hyperref[defn:FIM]{Fisher information matrix} equals the expectation of Hessian of log likelihood,
+                which is shown \hyperref[thm:EBFEHN]{here},
+                and Hessian of likelihood measure the amount of curvature of the surface of log likelihood,
+                we can infer that the problem with peaked likelihood will give good estimate of parameter when using sampling distribution.
+
         \subsection{Fisher Information Matrix}
+        The Fisher information matrix plays a key role in frequentist statistics,
+        and it is also used in Bayesian statistics (Jeffery's prior), and optimization.
+
+            \begin{defn}{Score Function}{ScoreFunc}
+            The score function is defined to be the gradient of the log likelihood:
+            \[
+            \bs{s}(\param) = \nabla_{\param}\log{p(\bs{x}|\param)}
+            \]
+            \end{defn}
+            
+            \begin{defn}{Fisher Information Matrix}{FIM}
+            Let $\bs{s}(\param)$ be the score function. 
+            The Fisher information matrix is defined to be the covariance of the score function:
+            \[
+            \textbf{F}(\param)=\text{Cov}[\bs{s}(\param) \bs{s}(\param)^{\top}]
+            =\mathbb{E}_{\bs{x} \sim p(\bs{x}|\param)}[\nabla_{\param}\log{p(\bs{x}|\param)}\nabla_{\param}\log{p(\bs{x}|\param)}^{\top}]
+            \]
+            \end{defn}
+
+            And here comes the theorem.
+
+            \begin{thm}{Equivalence Between FIM and Expectation of Hessian of NLL}{EBFEHN}
+            Let $\log{p(\bs{x}|\param)}$ be twice-differentiable, and ceratin conditions are satisfied.
+            Then, the Fisher information matrix equals the expectation of Hessian of the negative log likelihood,
+            i.e.,
+            \[
+            \mathbb{E}_{\data \sim p(\data|\param)}[\textbf{H}(\data)] = N\textbf{F}(\param)
+            \]
+            where $\textbf{H}$ is Hessian of $N$ iid samples, $\data$, and $\textbf{F}(\param)$ is the Fisher information matrix.
+            \end{thm}
+
+            \begin{proof}
+                Search for internet.
+            \end{proof}
 
     \section{Conjugate Priors}\label{sec:ConjugatePrior}
     Calculating the posterior distribution can be untractable, if the prior and likelihood does not match well.
